@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Ressource {
+  + {abstract} markFree(int resourceId): void
+  + {abstract} markBusy(int resourceId): void
+  + {abstract} findFree(): int
+}
+
+class TimeSlot {
+  + markFree(int resourceId): void
+  + markBusy(int resourceId): void
+  + findFree(): int
+}
+
+class SpaceSlot {
+  + markFree(int resourceId): void
+  + markBusy(int resourceId): void
+  + findFree(): int
+}
+
+class RessourceAllocator {
+  + allocate(resource: Ressource): int
+  + free(resource: Ressource, resourceId: int): void
+}
+
+Ressource <|-- TimeSlot
+Ressource <|-- SpaceSlot
+
+@enduml

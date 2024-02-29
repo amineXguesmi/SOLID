@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+enum ResourceType {
+    TIME_SLOT,
+    SPACE_SLOT
+}
+
+class ResourceAllocator {
+    - static final int INVALID_RESOURCE_ID = -1
+    + allocate(resourceType: ResourceType): int
+    + free(resourceType: ResourceType, resourceId: int): void
+    - markSpaceSlotFree(resourceId: int): void
+    - markTimeSlotFree(resourceId: int): void
+    - markSpaceSlotBusy(resourceId: int): void
+    - findFreeSpaceSlot(): int
+    - markTimeSlotBusy(resourceId: int): void
+    - findFreeTimeSlot(): int
+}
+
+ResourceType --> ResourceAllocator
+
+@enduml

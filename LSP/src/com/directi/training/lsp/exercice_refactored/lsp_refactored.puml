@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IDuck {
+  + quack(): void
+  + swim(): void
+}
+
+interface OperationalDuck {
+  + turnOn(): void
+  + turnOff(): void
+}
+
+class Pool {
+  + run(): void
+  - quack(ducks: IDuck...): void
+  - swim(ducks: IDuck...): void
+  + main(args: String[]): void
+}
+
+class Duck {
+  + quack(): void
+  + swim(): void
+}
+
+Pool --> IDuck : uses
+Pool --> OperationalDuck : uses
+
+OperationalDuck <|-- ElectricDuck
+IDuck <|-- OperationalDuck
+IDuck <|-- Duck
+@enduml
