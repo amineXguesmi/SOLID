@@ -6,20 +6,37 @@ interface Door {
   unlock() : void
   open() : void
   close() : void
-  timeOutCallback() : void
+}
+
+interface ISensingDoor extends Door {
   proximityCallback() : void
 }
 
+interface ITimedDoor extends Door {
+  timeOutCallback() : void
+}
+
 class Timer {
-  register(timeOut : long, door : Door) : void
+  register(timeOut : long, door : ITimedDoor) : void
 }
 
 class Sensor {
-  register(door : Door) : void
+  register(door : ISensingDoor) : void
   isPersonClose() : boolean
 }
 
-class TimedDoor implements Door {
+class SensingDoor implements ISensingDoor {
+  - _locked : boolean
+  - _opened : boolean
+  SensingDoor(sensor : Sensor)
+  lock() : void
+  unlock() : void
+  open() : void
+  close() : void
+  proximityCallback() : void
+}
+
+class TimedDoor implements ITimedDoor {
   - static TIME_OUT : int
   - _locked : boolean
   - _opened : boolean
@@ -29,22 +46,9 @@ class TimedDoor implements Door {
   open() : void
   close() : void
   timeOutCallback() : void
-  proximityCallback() : void
 }
 
-class SensingDoor implements Door {
-  - _locked : boolean
-  - _opened : boolean
-  SensingDoor(sensor : Sensor)
-  lock() : void
-  unlock() : void
-  open() : void
-  close() : void
-  timeOutCallback() : void
-  proximityCallback() : void
-}
-
-TimedDoor --> Timer
-SensingDoor --> Sensor
+Sensor --> ISensingDoor
+Timer --> ITimedDoor
 
 @enduml
